@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body 
+{
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code 
+{
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* Modal small animation (we rely mostly on tailwind; this improves small scaling) */
+@keyframes modalScale {
+  from { opacity: 0; transform: translateY(-6px) scale(.98) }
+  to { opacity: 1; transform: translateY(0) scale(1) }
+}
+
+/* Tiny utility to make modal appear smoother */
+.modal-appear {
+  animation: modalScale .18s ease-out forwards;
+}
+
+/* Crop card subtle extra */
+.crop-card img { transition: transform .35s ease; }
+.crop-card:hover img { transform: scale(1.03); }
+
+/* Responsive tweaks for modal (small screens) */
+@media (max-width: 640px) {
+  .modal-full { width: 95%; max-width: 95%; margin: 0 10px; }
+}
+
