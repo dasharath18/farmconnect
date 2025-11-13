@@ -3,20 +3,27 @@ import axios from "axios";
 import AuthForm from "./AuthForm";
 import { useAuth } from "../context/AuthContext";
 
+// use environment-based backend URL
+const API = process.env.REACT_APP_API_URL;
+
 export default function AuthModal({ mode = "login", onClose }) {
   const { login } = useAuth();
 
   const handleLogin = async (formData) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${API}/api/auth/login`, {
         email: formData.email,
         password: formData.password,
       });
+
       const { user, token } = res.data;
+
       login(user, token);
       onClose();
+
       if (user.role === "farmer") window.location.href = "/farmer/dashboard";
       else window.location.href = "/customer/dashboard";
+
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
@@ -24,12 +31,10 @@ export default function AuthModal({ mode = "login", onClose }) {
 
   const handleRegister = async (formData) => {
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData
-      );
+      const res = await axios.post(`${API}/api/auth/register`, formData);
       alert(res.data.message || "Registered successfully. Please login.");
       onClose();
+
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }
