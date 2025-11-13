@@ -1,37 +1,32 @@
 import axios from "axios";
-const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-// Get all notifications
+const API = process.env.REACT_APP_API_URL;
+
 export const getNotifications = async (token) => {
-  const res = await axios.get(`${BASE}/api/notifications`, {
+  const res = await axios.get(`${API}/api/notifications`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
 };
 
-// MARK notification as READ
 export const markNotificationRead = async (id, token) => {
   const res = await axios.put(
-    `${BASE}/api/notifications/read/${id}`,
+    `${API}/api/notifications/read/${id}`,
     {},
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
+    { headers: { Authorization: `Bearer ${token}` } }
   );
   return res.data;
 };
 
-// DELETE notification (dismiss)
 export const deleteNotification = async (id, token) => {
-  const res = await axios.delete(`${BASE}/api/notifications/${id}`, {
+  const res = await axios.delete(`${API}/api/notifications/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
 };
 
-// Get unread notifications count
 export const getUnreadCount = async (token) => {
-  const res = await axios.get(`${BASE}/api/notifications/count`, {
+  const res = await axios.get(`${API}/api/notifications/count`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
