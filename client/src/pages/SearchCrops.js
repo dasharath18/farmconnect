@@ -30,25 +30,27 @@ function SearchCrops() {
     return null;
   };
 
-  // Fetch crops on search params change
-  useEffect(() => {
-    const fetchCrops = async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const res = await fetch(`http://localhost:5000/api/crops${locationHook.search}`);
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Error fetching crops");
-        setCrops(data);
-      } catch (err) {
-        setError(err.message || "Error fetching crops");
-      } finally {
-        setLoading(false);
-      }
-    };
+const API = process.env.REACT_APP_API_URL;
 
-    fetchCrops();
-  }, [locationHook.search]);
+// Fetch crops on search params change
+useEffect(() => {
+  const fetchCrops = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const res = await fetch(`${API}/api/crops${locationHook.search}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Error fetching crops");
+      setCrops(data);
+    } catch (err) {
+      setError(err.message || "Error fetching crops");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchCrops();
+}, [locationHook.search]);
 
   // Fetch wishlist (if user logged in). If not authenticated, getWishlist may fail - ignore gracefully.
  useEffect(() => {

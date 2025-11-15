@@ -1,17 +1,14 @@
 import AuthForm from "../components/AuthForm";
 import axios from "axios";
 
-export default function Register() 
-{
-  const handleRegister = async (formData) => 
-  {
-    try 
-    {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+const API = process.env.REACT_APP_API_URL;
+
+export default function Register() {
+  const handleRegister = async (formData) => {
+    try {
+      const res = await axios.post(`${API}/api/auth/register`, formData);
       alert(res.data.message);
-    }
-    catch (err) 
-    {
+    } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }
   };

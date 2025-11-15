@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import RoleHeader from "../components/RoleHeader";
 
+const API = process.env.REACT_APP_API_URL;
+
 const productOptions = [
   "Wheat", "Rice", "Maize", "Sugarcane", "Barley",
   "Cotton", "Soybean", "Groundnut", "Mustard", "Pulses"
@@ -30,12 +32,10 @@ export default function EditCropForm() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/crops/${id}`, {
+      .get(`${API}/api/crops/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
-      .then((res) => {
-        setCrop(res.data);
-      })
+      .then((res) => setCrop(res.data))
       .catch((err) => console.log(err));
   }, [id]);
 
@@ -46,7 +46,7 @@ export default function EditCropForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/crops/${id}`, crop, {
+      .put(`${API}/api/crops/${id}`, crop, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then(() => {
@@ -58,6 +58,7 @@ export default function EditCropForm() {
         toast.error("Failed to update crop.");
       });
   };
+
 
   return (
     <>
